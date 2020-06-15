@@ -31,10 +31,24 @@ stages:
           ArmTemplateRoot: '${{ variables.ArmTemplateRoot }}'
           SolutionBaseName: '${{ variables.SolutionBaseName }}'
 
-      - template: AzureDevOpsTemplates\Build\StepTemplates\dfc-dotnetcore-build-sonar.yml@dfc-devops
-        parameters:
-          SolutionBaseName: $(SolutionBaseName)
-          BuildPlatform: 'any cpu'
-          BuildConfiguration: 'release'
-          DotNetCoreVersion: '3.1.100'
-          PublishWebApp: true
+      - task: PublishPipelineArtifact@0
+        displayName: Publish Page Registration artifact
+        inputs:
+          targetPath: '$(Build.SourcesDirectory)/Resources/PageRegistration'
+          artifactName: ${{ variables.SolutionBaseName }}.PageRegistrations
+
+#Build and test application
+  - job: BuildDotNetCore
+    displayName: Build-DotNetCore
+
+
+    steps:
+    #  Build DFC.App.Actionplans
+    - template: AzureDevOpsTemplates\Build\StepTemplates\dfc-dotnetcore-build-sonar.yml@dfc-devops
+      parameters:
+        SolutionBaseName: $(SolutionBaseName)
+        BuildPlatform: 'any cpu'
+        BuildConfiguration: 'release'
+        DotNetCoreVersion: '3.1.100'
+        PublishWebApp: true
+        TestSuffix: UnitTests
