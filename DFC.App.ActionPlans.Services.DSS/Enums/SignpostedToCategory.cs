@@ -19,6 +19,11 @@ namespace DFC.App.ActionPlans.Services.DSS.Enums
         SpecialistOrganisation = 7,
         [Display(Name = "JCP")] JCP = 8,
         [Display(Name = "Employer")] Employer = 9,
+        [Display(Name = "Job Centre Plus WITH Data")]
+        JCPWithData = 14,
+        
+        [Display(Name = "Job Centre Plus WITHOUT Data")]
+        JCPWithoutData = 15,
         [Display(Name = "Other")] Other = 99
     }
 }
